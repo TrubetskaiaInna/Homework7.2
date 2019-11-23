@@ -1,0 +1,68 @@
+body {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.wrapperButton{
+  width: 100%;
+}
+
+#button {
+  background-color: cadetblue;
+  color: lavender;
+  outline: none;
+  width: 150px;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.wrapperUser {
+  width: 250px;
+  margin-top: 25px;
+  margin-right: 25px;
+}
+
+.users, .posts, .coments {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid beige;
+  padding: 10px;
+}
+
+.wrapperPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 550px;
+  margin-top: 25px;
+  margin-right: 25px;
+}
+.wrapperComents{
+  width: 350px;
+  margin-top: 25px;
+}
+
+#message, #message2{
+  position: absolute;
+  top:25px;
+  left: 900px;
+  justify-content: space-between;
+  width: 200px;
+  padding: 5px;
+  border: 1px solid black;
+  display: none;
+  opacity: .5;
+}
+
+.number{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid cadetblue;
+  border-radius: 50%;
+  background-color: cadetblue;
+}
