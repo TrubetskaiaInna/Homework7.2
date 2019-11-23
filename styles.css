@@ -16,6 +16,7 @@ body {
   height: 30px;
   font-size: 18px;
   border-radius: 5px;
+  margin-top: 10px;
 }
 
 .wrapperUser {
@@ -46,7 +47,7 @@ body {
 
 #message, #message2{
   position: absolute;
-  top:25px;
+  top: 5px;
   left: 900px;
   justify-content: space-between;
   width: 200px;
@@ -54,6 +55,11 @@ body {
   border: 1px solid black;
   display: none;
   opacity: .5;
+  font-family: serif;
+}
+
+#message2{
+  color: red;
 }
 
 .number{

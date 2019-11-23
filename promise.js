@@ -21,13 +21,16 @@ function get (url) {
       if (oReg.status >= 400) {
         reject(oReg.response)
         message2.style.display = 'flex'
+        message1.style.display = 'none'
       } else {
         resolve(oReg.response)
         message1.style.display = 'flex'
+        message2.style.display = 'none'
       }
     }
     oReg.onerror = () => {
       message2.style.display = 'flex'
+      message1.style.display = 'none'
       reject(oReg.response)
     }
     oReg.send()
@@ -48,19 +51,25 @@ button.addEventListener('click', () => {
         const someElement = wrapperUser.appendChild(document.createElement('div'))
         someElement.className = 'users'
         someElement.innerHTML = element.name
-
         someElement.addEventListener('click', () => {
           someElement.style.backgroundColor = 'beige'
 
-          get(`https://jsonplaceholder.typicodeeeeeee.com/posts?userId=${element.id}`)
+          get(`https://jsonplaceholder.typicode.com/posts?userId=${element.id}`)
             .then(function (data) {
               data.forEach((element2) => {
                 const someElement2 = wrapperPost.appendChild(document.createElement('div'))
                 someElement2.className = 'posts'
+                someElement2.innerHTML = element2.title
+
+                    const spinner = someElement2.appendChild(document.createElement('div'))
+                    spinner.className = 'spinner-border spinner-border-sm'
+                    spinner.setAttribute('role', 'status')
+                    const spinnerSpan = spinner.appendChild(document.createElement('span'))
+                    spinnerSpan.className = 'sr-only'
 
                 get(`https://jsonplaceholder.typicode.com/comments?postId=${element2.id}`)
                   .then(function (data) {
-                    someElement2.innerHTML = element2.title
+                    spinner.style.display = 'none'
                     const elementNumber = someElement2.appendChild(document.createElement('div'))
                     elementNumber.innerHTML = data.length
                     elementNumber.className = 'number'
