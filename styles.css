@@ -4,7 +4,7 @@ body {
   flex-wrap: wrap;
 }
 
-.wrapperButton{
+.wrapperButton {
   width: 100%;
 }
 
@@ -17,15 +17,17 @@ body {
   font-size: 18px;
   border-radius: 5px;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 .wrapperUser {
   width: 250px;
   margin-top: 25px;
   margin-right: 25px;
+  margin-left: 10px;
 }
 
-.users, .posts, .coments {
+.users, .posts, .comments {
   display: flex;
   justify-content: space-between;
   border: 1px solid beige;
@@ -35,17 +37,21 @@ body {
 .wrapperPost {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   width: 550px;
   margin-top: 25px;
   margin-right: 25px;
 }
-.wrapperComents{
+
+.wrapperComments {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
   width: 350px;
   margin-top: 25px;
 }
 
-#message, #message2{
+#message, #messageError {
   position: absolute;
   top: 5px;
   left: 900px;
@@ -58,17 +64,18 @@ body {
   font-family: serif;
 }
 
-#message2{
+#messageError {
   color: red;
 }
 
-.number{
+.number {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
+  min-width: 20px;
   height: 20px;
   border: 1px solid cadetblue;
   border-radius: 50%;
   background-color: cadetblue;
+  font-size: 15px;
 }

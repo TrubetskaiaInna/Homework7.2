@@ -1,15 +1,21 @@
 const button = document.getElementById('button')
 const body = document.getElementById('body')
-const message1 = document.getElementById('message')
+const message = document.getElementById('message')
 const buttonMessage = document.getElementById('close')
-const message2 = document.getElementById('message2')
-const buttonMessage2 = document.getElementById('close2')
+const messageError = document.getElementById('messageError')
+const buttonMessageError = document.getElementById('closeError')
+const wrapperUser = body.appendChild(document.createElement('div'))
+wrapperUser.className = 'wrapperUser'
+const wrapperPost = body.appendChild(document.createElement('div'))
+wrapperPost.className = 'wrapperPost'
+const wrapperComments = body.appendChild(document.createElement('div'))
+wrapperComments.className = 'wrapperComments'
 
 buttonMessage.addEventListener('click', () => {
-  message1.style.display = 'none'
+  message.style.display = 'none'
 })
-buttonMessage2.addEventListener('click', () => {
-  message2.style.display = 'none'
+buttonMessageError.addEventListener('click', () => {
+  messageError.style.display = 'none'
 })
 
 function get (url) {
@@ -20,70 +26,72 @@ function get (url) {
     oReg.onload = () => {
       if (oReg.status >= 400) {
         reject(oReg.response)
-        message2.style.display = 'flex'
-        message1.style.display = 'none'
+        messageError.style.display = 'flex'
+        message.style.display = 'none'
       } else {
         resolve(oReg.response)
-        message1.style.display = 'flex'
-        message2.style.display = 'none'
+        message.style.display = 'flex'
+        messageError.style.display = 'none'
       }
     }
     oReg.onerror = () => {
-      message2.style.display = 'flex'
-      message1.style.display = 'none'
+      messageError.style.display = 'flex'
+      message.style.display = 'none'
       reject(oReg.response)
     }
     oReg.send()
   })
 }
 
-const wrapperUser = body.appendChild(document.createElement('div'))
-wrapperUser.className = 'wrapperUser'
-const wrapperPost = body.appendChild(document.createElement('div'))
-wrapperPost.className = 'wrapperPost'
-const wrapperComents = body.appendChild(document.createElement('div'))
-wrapperComents.className = 'wrapperComents'
-
 button.addEventListener('click', () => {
+  wrapperUser.innerHTML = ''
   get('https://jsonplaceholder.typicode.com/users')
     .then(function (data) {
       data.forEach((element) => {
-        const someElement = wrapperUser.appendChild(document.createElement('div'))
-        someElement.className = 'users'
-        someElement.innerHTML = element.name
-        someElement.addEventListener('click', () => {
-          someElement.style.backgroundColor = 'beige'
+        const divUser = wrapperUser.appendChild(document.createElement('div'))
+        divUser.className = 'users'
+        divUser.innerHTML = element.name
+        divUser.addEventListener('click', () => {
+          wrapperComments.innerHTML = ''
+          wrapperPost.innerHTML = ''
+          divUser.style.backgroundColor = 'beige'
+
+          let arrUser = document.getElementsByClassName('users')
+          for (let i = 0; i < arrUser.length; i++) {
+            if (i !== (element.id - 1)) {
+              arrUser[i].style.backgroundColor = 'white'
+            }
+          }
 
           get(`https://jsonplaceholder.typicode.com/posts?userId=${element.id}`)
             .then(function (data) {
               data.forEach((element2) => {
-                const someElement2 = wrapperPost.appendChild(document.createElement('div'))
-                someElement2.className = 'posts'
-                someElement2.innerHTML = element2.title
+                const divPost = wrapperPost.appendChild(document.createElement('div'))
+                divPost.className = 'posts'
+                divPost.innerHTML = element2.title
 
-                    const spinner = someElement2.appendChild(document.createElement('div'))
-                    spinner.className = 'spinner-border spinner-border-sm'
-                    spinner.setAttribute('role', 'status')
-                    const spinnerSpan = spinner.appendChild(document.createElement('span'))
-                    spinnerSpan.className = 'sr-only'
+                const spinner = divPost.appendChild(document.createElement('div'))
+                spinner.className = 'spinner-border spinner-border-sm'
+                spinner.setAttribute('role', 'status')
+                const spinnerSpan = spinner.appendChild(document.createElement('span'))
+                spinnerSpan.className = 'sr-only'
 
                 get(`https://jsonplaceholder.typicode.com/comments?postId=${element2.id}`)
                   .then(function (data) {
                     spinner.style.display = 'none'
-                    const elementNumber = someElement2.appendChild(document.createElement('div'))
+                    const elementNumber = divPost.appendChild(document.createElement('div'))
                     elementNumber.innerHTML = data.length
                     elementNumber.className = 'number'
                   })
-                someElement2.addEventListener('click', () => {
-                  someElement2.style.backgroundColor = 'beige'
+                divPost.addEventListener('click', () => {
+                  wrapperComments.innerHTML = ''
 
                   get(`https://jsonplaceholder.typicode.com/comments?postId=${element2.id}`)
                     .then(function (data) {
                       data.forEach((element3) => {
-                        const someElement3 = wrapperComents.appendChild(document.createElement('div'))
-                        someElement3.className = 'coments'
-                        someElement3.innerHTML = element3.name
-
+                        const divComment = wrapperComments.appendChild(document.createElement('div'))
+                        divComment.className = 'comments'
+                        divComment.innerHTML = element3.name
                       })
                     })
                 })
