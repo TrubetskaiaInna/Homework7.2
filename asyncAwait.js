@@ -42,3 +42,13 @@ function get (url) {
     oReg.send()
   })
 }
+
+button.addEventListener('click', async () => {
+  wrapperUser.innerHTML = ''
+  let users = await get('https://jsonplaceholder.typicode.com/users')
+  users.forEach((element) => {
+    const divUser = wrapperUser.appendChild(document.createElement('div'))
+    divUser.className = 'users'
+    divUser.innerHTML = element.name
+  })
+})
